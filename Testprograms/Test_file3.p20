@@ -1,31 +1,31 @@
 STARTPROGRAM TEST3;
-DATA INT_4 _AAA00, _BBB11, _CYA22, _CYB33, _XVE44;
+DATA INT_4 _aaa00, _bbb11, _cya22, _cyb33, _xve44;
 STARTBLOCK
-  READ ( _AAA00 );
-  READ ( _BBB11 );
+  READ ( _aaa00 );
+  READ ( _bbb11 );
 
-  _AAA00 :> _CYA22
-  IF _CYA22 LT _BBB00 ADD 1 {
+  _aaa00 :> _cya22
+  IF _cya22 LT _bbb00 ADD 1 {
     REPEAT
-      WRITE(_CYA22 * _CYA22)
-      _CYA22 ADD 1 :> _CYA22 
-    UNTIL _CYA22 LT _BBB11 ADD 1
+      WRITE(_cya22 * _cya22)
+      _cya22 ADD 1 :> _cya22 
+    UNTIL _cya22 LT _bbb11 ADD 1
   }
 
-  0 :> _XVE44
-  1 :> _CYA22
-  IF _CYA22 LT _AAA00 ADD 1 {
+  0 :> _xve44
+  1 :> _cya22
+  IF _cya22 LT _aaa00 ADD 1 {
     REPEAT
-      1 :> _CYB33
-      IF _CYA22 LT _BBB00 ADD 1 {
+      1 :> _cyb33
+      IF _cya22 LT _bbb00 ADD 1 {
         REPEAT
-          _XVE44 ADD 1 :> _XVE44 
-          _CYB33 ADD 1 :> _CYB33
-        UNTIL _CYB33 LT _BBB11 ADD 1
+          _xve44 ADD 1 :> _xve44 
+          _cyb33 ADD 1 :> _cyb33
+        UNTIL _cyb33 LT _bbb11 ADD 1
       }
-    _CYA22 ADD 1 :> _CYA22
-    UNTIL _CYA22 LT _AAA00 ADD 1
+    _cya22 ADD 1 :> _cya22
+    UNTIL _cya22 LT _aaa00 ADD 1
   }
-  WRITE(_XVE44)
+  WRITE(_xve44)
 
 ENDBLOCK

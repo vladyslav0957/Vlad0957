@@ -1,32 +1,32 @@
 STARTPROGRAM TEST2;
-DATA INT_4 _AAA00, _BBB11, _CCC22, _MAXM;
+DATA INT_4 _aaa00, _bbb11, _ccc22, _maxm;
 STARTBLOCK
-	READ (_AAA00);
-	READ (_BBB11);
-	READ (_CCC22);
+	READ (_aaa00);
+	READ (_bbb11);
+	READ (_ccc22);
 
-	IF _AAA00 GT _BBB11 AND _AAA00 GT _CCC22 {
-		_AAA00 :> _MAXM;
-	} ELSE IF _BBB11 GT _AAA00 AND _BBB11 GT _CCC22 {
-		_BBB11 :> _MAXM;
+	IF _aaa00 GT _bbb11 AND _aaa00 GT _ccc22 {
+		_aaa00 :> _maxm;
+	} ELSE IF _bbb11 GT _aaa00 AND _bbb11 GT _ccc22 {
+		_bbb11 :> _maxm;
 	} ELSE {
-		_CCC22 :> _MAXM;
+		_ccc22 :> _maxm;
 	}
-	WRITE (_MAXM);
+	WRITE (_maxm);
   
-	IF (_AAA00 EQ _BBB11) AND (_AAA00 EQ _CCC22) AND (_BBB11 EQ _CCC22) {
+	IF (_aaa00 EQ _bbb11) AND (_aaa00 EQ _ccc22) AND (_bbb11 EQ _ccc22) {
 		WRITE (1);
 	} ELSE {
 		WRITE (0);
 	}
 
-	IF (_AAA00 LT 0) OR (_BBB11 LT 0) OR (_CCC22 LT 0) {
+	IF (_aaa00 LT 0) OR (_bbb11 LT 0) OR (_ccc22 LT 0) {
 		WRITE (-1);
 	} ELSE {
 		WRITE (0);
 	}
 	
-	IF NOT (_AAA00 LT (_BBB11 ADD _CCC22) ) {
+	IF NOT (_aaa00 LT (_bbb11 ADD _ccc22) ) {
 		WRITE(10);
 	} ELSE {
 		WRITE (0);
