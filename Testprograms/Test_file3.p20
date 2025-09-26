@@ -1,4 +1,4 @@
-STARTPROGRAM TEST3;
+STARTPROGRAM 
 DATA INT_4 _aaa00, _bbb11, _cya22, _cyb33, _xve44;
 STARTBLOCK
   READ ( _aaa00 );
