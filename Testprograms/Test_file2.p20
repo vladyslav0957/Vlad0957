@@ -1,32 +1,32 @@
 STARTPROGRAM 
-DATA INT_4 _aaa00, _bbb11, _ccc22, _maxm;
+DATA INT_4 _aaa00, _bbb00, _ccc00, _max00;
 STARTBLOCK
 	READ (_aaa00);
-	READ (_bbb11);
-	READ (_ccc22);
+	READ (_bbb00);
+	READ (_ccc00);
 
-	IF _aaa00 GT _bbb11 AND _aaa00 GT _ccc22 {
-		_aaa00 :> _maxm;
-	} ELSE IF _bbb11 GT _aaa00 AND _bbb11 GT _ccc22 {
-		_bbb11 :> _maxm;
+	IF _aaa00 GT _bbb00 AND _aaa00 GT _ccc00 {
+		_aaa00 :> _max00;
+	} ELSE IF _bbb00 GT _aaa00 AND _bbb00 GT _ccc00 {
+		_bbb00 :> _max0;
 	} ELSE {
-		_ccc22 :> _maxm;
+		_ccc00 :> _max00;
 	}
-	WRITE (_maxm);
+	WRITE (_max00);
   
-	IF (_aaa00 EQ _bbb11) AND (_aaa00 EQ _ccc22) AND (_bbb11 EQ _ccc22) {
+	IF (_aaa00 EQ _bbb00) AND (_aaa00 EQ _ccc00) AND (_bbb00 EQ _ccc00) {
 		WRITE (1);
 	} ELSE {
 		WRITE (0);
 	}
 
-	IF (_aaa00 LT 0) OR (_bbb11 LT 0) OR (_ccc22 LT 0) {
+	IF (_aaa00 LT 0) OR (_bbb00 LT 0) OR (_ccc00 LT 0) {
 		WRITE (-1);
 	} ELSE {
 		WRITE (0);
 	}
 	
-	IF NOT (_aaa00 LT (_bbb11 ADD _ccc22) ) {
+	IF NOT (_aaa00 LT (_bbb00 ADD _ccc00) ) {
 		WRITE(10);
 	} ELSE {
 		WRITE (0);

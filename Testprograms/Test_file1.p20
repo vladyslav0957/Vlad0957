@@ -1,18 +1,18 @@
 STARTPROGRAM 
-DATA INT_4 _aaa00, _bbb11, _ccc22, _ddd33 ;
+DATA INT_4 _aaa00, _bbb00, _ccc00, _ddd00 ;
 STARTBLOCK
 	READ (_aaa00);
-	READ (_bbb11);
+	READ (_bbb00);
 
-	WRITE (_aaa00 ADD _bbb11);
-	WRITE (_aaa00 SUB _bbb11);
-	WRITE (_aaa00 MUL _bbb11);
-	WRITE (_aaa00 DIV _bbb11);
-	WRITE (_aaa00 MOD _bbb11);
+	WRITE (_aaa00 ADD _bbb00);
+	WRITE (_aaa00 SUB _bbb00);
+	WRITE (_aaa00 MUL _bbb00);
+	WRITE (_aaa00 DIV _bbb00);
+	WRITE (_aaa00 MOD _bbb00);
 	
-	(_aaa00 SUB _bbb11) MUL 10 ADD (_aaa00 ADD _bbb11) DIV 10 :> _ccc22
-	_ccc22 ADD _ccc22 MOD 10 :> _ddd33 
+	(_aaa00 SUB _bbb00) MUL 10 ADD (_aaa00 ADD _bbb00) DIV 10 :> _ccc00
+	_ccc00 ADD _ccc00 MOD 10 :> _ddd00 
 	
-	WRITE (_ccc22);
-	WRITE (_ddd33);
+	WRITE (_ccc00);
+	WRITE (_ddd00);
 ENDBLOCK
