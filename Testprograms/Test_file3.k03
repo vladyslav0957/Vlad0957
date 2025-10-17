@@ -1,13 +1,13 @@
 STARTPROGRAM 
 DATA INT_4 aaa00, bbb00, cya00, cyb00, xve00;
 STARTBLOCK
-  READ ( aaa00 );
-  READ ( bbb00 );
+  READ (aaa00);
+  READ (bbb00);
 
   aaa00 :> cya00
   IF cya00 LT bbb00 ADD 1 {
     REPEAT
-      WRITE(cya00 * cya00)
+      WRITE(cya00 MUL cya00)
       cya00 ADD 1 :> cya00 
     UNTIL cya00 LT bbb00 ADD 1
   }

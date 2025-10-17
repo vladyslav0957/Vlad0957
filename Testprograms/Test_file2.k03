@@ -4,31 +4,32 @@ STARTBLOCK
 	READ (aaa00);
 	READ (bbb00);
 	READ (ccc00);
-
-	IF (aaa00 GT bbb00) & (aaa00 GT ccc00) {
+	
+	IF (aaa00 GT bbb00 & aaa00 GT ccc00) {
 		aaa00 :> max00;
-	} ELSE IF (bbb00 GT aaa00) & (bbb00 GT ccc00) {
+	} ELSE IF (bbb00 GT aaa00 & bbb00 GT ccc00) {
 		bbb00 :> max00;
 	} ELSE {
 		ccc00 :> max00;
 	}
 	WRITE (max00);
   
-	IF (aaa00 EQ bbb00) & (aaa00 EQ ccc00) & (bbb00 EQ ccc00) {
+	IF (aaa00 EQ bbb00 & aaa00 EQ ccc00 & bbb00 EQ ccc00) {
 		WRITE (1);
 	} ELSE {
 		WRITE (0);
 	}
 
-	IF (aaa00 LT 0) OR (bbb00 LT 0) OR (ccc00 LT 0) {
-		WRITE (-1);
+	IF (aaa00 LT 0 OR bbb00 LT 0 OR ccc00 LT 0) {
+		WRITE (SUB 1);
 	} ELSE {
 		WRITE (0);
 	}
 	
-	IF NOT (aaa00 LT (bbb00 ADD ccc00) ) {
-		WRITE(10);
+	IF NOT (aaa00 LT bbb00 ADD ccc00) {
+		WRITE (10);
 	} ELSE {
 		WRITE (0);
 	}
+
 ENDBLOCK
