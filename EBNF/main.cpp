@@ -154,8 +154,6 @@ struct cwgrammar : qi::grammar<Iterator> {
         BOUNDARY_NULL = "\0";
         NO_BOUNDARY = "";
         //
-        tokenUNDERSCORE = "_";
-        //
         A = "A";
         B = "B";
         C = "C";
@@ -282,7 +280,6 @@ struct cwgrammar : qi::grammar<Iterator> {
         digit, non_zero_digit, value, unsigned_value,
         letter_in_upper_case, letter_in_lower_case, ident,
         //label,
-        tokenUNDERSCORE,
         a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z,
         A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z;
 };
@@ -553,7 +550,7 @@ binary_action____iteration_after_two
             | unsigned_value >> BOUNDARIES; // + (!) A->a
         letter_in_lower_case = a | b | c | d | e | f | g | h | i | j | k | l | m | n | o | p | q | r | s | t | u | v | w | x | y | z;
         letter_in_upper_case = A | B | C | D | E | F | G | H | I | J | K | L | M | N | O | P | Q | R | S | T | U | V | W | X | Y | Z;
-        ident = tokenUNDERSCORE >> letter_in_upper_case >> letter_in_upper_case >> letter_in_upper_case >> letter_in_upper_case >> letter_in_upper_case >> letter_in_upper_case >> letter_in_upper_case >> STRICT_BOUNDARIES;
+        ident = letter_in_lower_case >> letter_in_lower_case >> letter_in_lower_case >> digit >> digit >> STRICT_BOUNDARIES;
         //label = letter_in_lower_case >> *letter_in_lower_case >> STRICT_BOUNDARIES; // !
         //
         sign = sign_plus           // + (!)
@@ -615,8 +612,6 @@ binary_action____iteration_after_two
         BOUNDARY_LINE_FEED = "\n";
         BOUNDARY_NULL = "\0";
         NO_BOUNDARY = "";
-        //
-        tokenUNDERSCORE = "_";
         //
         A = "A";
         B = "B";
@@ -732,7 +727,6 @@ binary_action____iteration_after_two
         digit, non_zero_digit, value, unsigned_value,
         letter_in_upper_case, letter_in_lower_case, ident,
         //label,
-        tokenUNDERSCORE,
         a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z,
         A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z;
 };
