@@ -1,0 +1,18 @@
+STARTPROGRAM 
+DATA INT_4 aaa00, bbb00, ccc00, ddd00 ;
+STARTBLOCK
+	READ (aaa00);
+	READ (bbb00);
+
+	WRITE (aaa00 ADD bbb00);
+	WRITE (aaa00 SUB bbb00);
+	WRITE (aaa00 MUL bbb00);
+	WRITE (aaa00 DIV bbb00);
+	WRITE (aaa00 MOD bbb00);
+	
+	(aaa00 SUB bbb00) MUL 10 ADD (aaa00 ADD bbb00) DIV 10 :> ccc00
+	ccc00 ADD ccc00 MOD 10 :> ddd00 
+	
+	WRITE (ccc00);
+	WRITE (ddd00);
+ENDBLOCK

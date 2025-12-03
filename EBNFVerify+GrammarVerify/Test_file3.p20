@@ -1,0 +1,31 @@
+STARTPROGRAM 
+DATA INT_4 aaa00, bbb00, cya00, cyb00, xve00;
+STARTBLOCK
+  READ (aaa00);
+  READ (bbb00);
+
+  aaa00 :> cya00
+  IF cya00 LT bbb00 ADD 1 {
+    REPEAT
+      WRITE(cya00 MUL cya00)
+      cya00 ADD 1 :> cya00 
+    UNTIL cya00 LT bbb00 ADD 1
+  }
+
+  0 :> xve00
+  1 :> cya00
+  IF cya00 LT aaa00 ADD 1 {
+    REPEAT
+      1 :> cyb00
+      IF cya00 LT bbb00 ADD 1 {
+        REPEAT
+          xve00 ADD 1 :> xve00 
+          cyb00 ADD 1 :> cyb00
+        UNTIL cyb00 LT bbb00 ADD 1
+      }
+    cya00 ADD 1 :> cya00
+    UNTIL cya00 LT aaa00 ADD 1
+  }
+  WRITE(xve00)
+
+ENDBLOCK
