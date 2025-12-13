@@ -382,8 +382,10 @@ void removing_unreachable_DFA_states(int* dead_state, int* nextFreeState) {
                           "|GT"\
                           "|,"\
                           "|NE"\
-                          "|("\
-                          "|)"\
+                          "|["\
+                          "|]"\
+                          "|(("\
+                          "|))"\
                           "|{"\
                           "|}"\
                           "|"\
@@ -403,8 +405,10 @@ void removing_unreachable_DFA_states(int* dead_state, int* nextFreeState) {
                           "|LT"\
                           "|GT"\
                           "|NE"\
-                          "|("\
-                          "|)"\
+                          "|["\
+                          "|]"\
+                          "|(("\
+                          "|))"\
                           "|{"\
                           "|}"\
                           "|STARTPROGRAM"\
@@ -436,8 +440,10 @@ void removing_unreachable_DFA_states(int* dead_state, int* nextFreeState) {
                           "|LT"\
                           "|GT"\
                           "|NE"\
-                          "|("\
-                          "|)"\
+                          "|["\
+                          "|]"\
+                          "|(("\
+                          "|))"\
                           "|{"\
                           "|}"\
                           "|STARTPROGRAM"\
@@ -463,6 +469,8 @@ void removing_unreachable_DFA_states(int* dead_state, int* nextFreeState) {
                     "|:>" \
                     "|ADD" \
                     "|," \
+                    "|["\
+                    "|]"\
                     "|(("\
                     "|))"\
                     "|{" \
