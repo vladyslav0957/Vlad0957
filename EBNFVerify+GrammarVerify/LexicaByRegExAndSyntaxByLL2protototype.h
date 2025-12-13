@@ -7,8 +7,8 @@
 
 
 
-#define COMMENT_BEGIN_STR "#*"
-#define COMMENT_END_STR   "*#"
+#define COMMENT_BEGIN_STR "/*"
+#define COMMENT_END_STR   "\n"
 #define TOKENS_RE         ":>|&|[_0-9A-Za-z]+|[^ \t\r\f\v\n]"
 #define KEYWORDS_RE       ";|:>|&|ADD|SUB|MUL|,|EQ|NE|\\[|\\]|\\(|\\)|\\{|\\}|STARTPROGRAM|DATA|STARTBLOCK|ENDBLOCK|READ|WRITE|IF|ELSE|REPEAT|UNTIL|DIV|MOD|LT|GT|NOT|OR|INT_4"
 #define IDENTIFIERS_RE    "[a-z][a-z][a-z][0-9][0-9]"

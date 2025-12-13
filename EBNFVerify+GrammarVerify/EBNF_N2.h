@@ -154,8 +154,8 @@ w, \
 x, \
 y, \
 z
-#define COMMENT_BEGIN_STR "#*"
-#define COMMENT_END_STR   "*#"
+#define COMMENT_BEGIN_STR "/*"
+#define COMMENT_END_STR   "\n"
 
 
 
