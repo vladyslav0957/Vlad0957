@@ -374,14 +374,8 @@ void removing_unreachable_DFA_states(int* dead_state, int* nextFreeState) {
 
 #define TOKENS_RN         "("\
                           ";"\
-                          "|:(^|>)"\
-                          "|ADD"\
-                          "|SUB"\
-                          "|MUL"\
-                          "|LT"\
-                          "|GT"\
+                          "|:>"\
                           "|,"\
-                          "|NE"\
                           "|["\
                           "|]"\
                           "|(("\

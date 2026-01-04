@@ -1,4 +1,4 @@
-﻿#define _CRT_SECURE_NO_WARNINGS
+#define _CRT_SECURE_NO_WARNINGS
 #define WIN32_LEAN_AND_MEAN
 /************************************************************************
 * N.Kozak // Lviv'2024-2025 // example syntax analysis by boost::spirit *
@@ -14,11 +14,11 @@
 
 #define CW_GRAMMAR cwgrammar
 
-//#define DEBUG__IF_ERROR
+#define DEBUG__IF_ERROR
 
 #define RERUN_MODE
 
-#define DEFAULT_INPUT_FILE "Test_file3.p20"
+#define DEFAULT_INPUT_FILE "Test_file1.p20"
 //#define DEFAULT_INPUT_FILE "../other_test_programs_2025/file4.k03"
 
 #define MAX_TEXT_SIZE 8192
@@ -31,7 +31,6 @@ template <typename Iterator>
 struct cwgrammar : qi::grammar<Iterator> {
     cwgrammar(std::ostringstream& error_stream) : cwgrammar::base_type(program), error_stream_(error_stream) {
         //
-        labeled_point = ident >> tokenCOLON;
         program_name = SAME_RULE(ident);
         value_type = SAME_RULE(tokenINTEGER);
         declaration_element = ident >> -(tokenLEFTSQUAREBRACKETS >> unsigned_value >> tokenRIGHTSQUAREBRACKETS);
@@ -52,14 +51,13 @@ struct cwgrammar : qi::grammar<Iterator> {
         body_for_false__with_optionally_return_value = tokenELSE >> block_statements__with_optionally_return_value;
         cond_block__with_optionally_return_value = tokenIF >> if_expression >> body_for_true__with_optionally_return_value >> *false_cond_block_without_else__with_optionally_return_value >> -body_for_false__with_optionally_return_value;
         cond_block__with_optionally_return_value_and_optionally_bind = cond_block__with_optionally_return_value >> -(tokenLRBIND >> ident >> -index_action);
-        statement_in_while_and_if_body = statement | continue_while | break_while;
         repeat_until_cycle_cond = SAME_RULE(expression);
         repeat_until_cycle = tokenREPEAT >> (*statement | block_statements) >> tokenUNTIL >> repeat_until_cycle_cond;
         input = tokenGET >> (ident >> -index_action | tokenGROUPEXPRESSIONBEGIN >> ident >> -index_action >> tokenGROUPEXPRESSIONEND);
         output = tokenPUT >> expression;
         statement = bind_left_to_right | cond_block__with_optionally_return_value_and_optionally_bind | repeat_until_cycle | input | output | tokenSEMICOLON;
         block_statements = tokenBEGINBLOCK >> *statement >> tokenENDBLOCK;
-        block_statements__with_optionally_return_value = tokenBEGINBLOCK >> *statement_in_while_and_if_body >> -expression >> tokenENDBLOCK;
+        block_statements__with_optionally_return_value = tokenBEGINBLOCK >> *statement >> -expression >> tokenENDBLOCK;
         program = BOUNDARIES >> tokenNAME >> tokenDATA >> (-declaration) >> tokenSEMICOLON >> tokenBEGIN >> *statement >> tokenEND;
         digit = digit_0 | digit_1 | digit_2 | digit_3 | digit_4 | digit_5 | digit_6 | digit_7 | digit_8 | digit_9;
         non_zero_digit = digit_1 | digit_2 | digit_3 | digit_4 | digit_5 | digit_6 | digit_7 | digit_8 | digit_9;
@@ -81,7 +79,6 @@ struct cwgrammar : qi::grammar<Iterator> {
         digit_7 = '7';
         digit_8 = '8';
         digit_9 = '9';
-        tokenCOLON = ":" >> BOUNDARIES;
         tokenINTEGER = "INT_4" >> STRICT_BOUNDARIES;
         tokenCOMMA = "," >> BOUNDARIES;
         tokenNOT = "NOT" >> STRICT_BOUNDARIES;
@@ -123,6 +120,7 @@ struct cwgrammar : qi::grammar<Iterator> {
         BOUNDARY_LINE_FEED = "\n";
         BOUNDARY_NULL = "\0";
         NO_BOUNDARY = "";
+        tokenUNDERSCORE = "_";
         A = "A";
         B = "B";
         C = "C";
@@ -175,6 +173,8 @@ struct cwgrammar : qi::grammar<Iterator> {
         x = "x";
         y = "y";
         z = "z";
+
+//
 
 #ifdef DEBUG__IF_ERROR
         qi::on_error<qi::fail>(input,
@@ -237,6 +237,7 @@ struct cwgrammar : qi::grammar<Iterator> {
         tokenGREATEROREQUAL,
         tokenLESS,
         tokenGREATER,
+        tokenUNDERSCORE,
         tokenPLUS, tokenMINUS, tokenMUL, tokenDIV, tokenMOD, tokenGROUPEXPRESSIONBEGIN, tokenGROUPEXPRESSIONEND, tokenLRBIND,
         tokenELSE, tokenIF, tokenDO, tokenFOR, tokenTO, tokenDOWNTO, tokenWHILE, tokenCONTINUE, tokenBREAK, tokenEXIT, tokenREPEAT, tokenUNTIL, tokenGET, tokenPUT, tokenNAME, tokenBODY, tokenDATA, tokenBEGIN, tokenEND, tokenBEGINBLOCK, tokenENDBLOCK, tokenLEFTSQUAREBRACKETS, tokenRIGHTSQUAREBRACKETS, tokenSEMICOLON,
         //
@@ -518,7 +519,7 @@ binary_action____iteration_after_two
             | unsigned_value >> BOUNDARIES; // + (!) A->a
         letter_in_lower_case = a | b | c | d | e | f | g | h | i | j | k | l | m | n | o | p | q | r | s | t | u | v | w | x | y | z;
         letter_in_upper_case = A | B | C | D | E | F | G | H | I | J | K | L | M | N | O | P | Q | R | S | T | U | V | W | X | Y | Z;
-        ident = letter_in_lower_case >> letter_in_lower_case >> letter_in_lower_case >> digit >> digit >> STRICT_BOUNDARIES;
+        ident = letter_in_lower_case >> letter_in_upper_case >> letter_in_upper_case >> STRICT_BOUNDARIES;
         //label = letter_in_lower_case >> *letter_in_lower_case >> STRICT_BOUNDARIES; // !
         //
         sign = sign_plus           // + (!)
@@ -538,39 +539,38 @@ binary_action____iteration_after_two
         digit_9 = '9';
         //
         tokenCOLON = ":" >> BOUNDARIES;
-        tokenINTEGER = "INT_4" >> STRICT_BOUNDARIES;
+        tokenINTEGER = "INT_2" >> STRICT_BOUNDARIES;
         tokenCOMMA = "," >> BOUNDARIES;
-        tokenNOT = "NOT" >> STRICT_BOUNDARIES;
-        tokenAND = "&" >> STRICT_BOUNDARIES;
-        tokenOR = "OR" >> STRICT_BOUNDARIES;
-        tokenEQUAL = "EQ" >> BOUNDARIES;
-        tokenNOTEQUAL = "NE" >> BOUNDARIES;
-        tokenPLUS = "ADD" >> BOUNDARIES;
-        tokenMINUS = "SUB" >> BOUNDARIES;
-        tokenMUL = "MUL" >> BOUNDARIES;
+        tokenNOT = "!!" >> STRICT_BOUNDARIES;
+        tokenAND = "&&" >> STRICT_BOUNDARIES;
+        tokenOR = "||" >> STRICT_BOUNDARIES;
+        tokenEQUAL = "=" >> BOUNDARIES;
+        tokenNOTEQUAL = "<>" >> BOUNDARIES;
+        tokenLESS = "LT" >> BOUNDARIES;
+        tokenGREATER = "GT" >> BOUNDARIES;
+        tokenPLUS = "+" >> BOUNDARIES;
+        tokenMINUS = "-" >> BOUNDARIES;
+        tokenMUL = "*" >> BOUNDARIES;
         tokenDIV = "DIV" >> STRICT_BOUNDARIES;
         tokenMOD = "MOD" >> STRICT_BOUNDARIES;
         tokenGROUPEXPRESSIONBEGIN = "(" >> BOUNDARIES;
         tokenGROUPEXPRESSIONEND = ")" >> BOUNDARIES;
-        tokenLRBIND = ":>" >> BOUNDARIES;
+        tokenLRBIND = "=:" >> BOUNDARIES;
         tokenELSE = "ELSE" >> STRICT_BOUNDARIES;
         tokenIF = "IF" >> STRICT_BOUNDARIES;
         tokenREPEAT = "REPEAT" >> STRICT_BOUNDARIES;
         tokenUNTIL = "UNTIL" >> STRICT_BOUNDARIES;
-        tokenGET = "READ" >> STRICT_BOUNDARIES;
-        tokenPUT = "WRITE" >> STRICT_BOUNDARIES;
-        tokenNAME = "STARTPROGRAM" >> STRICT_BOUNDARIES;
-        tokenBODY = "STARTBLOCK" >> STRICT_BOUNDARIES;
-        tokenDATA = "DATA" >> STRICT_BOUNDARIES;
+        tokenGET = "INPUT" >> STRICT_BOUNDARIES;
+        tokenPUT = "OUTPUT" >> STRICT_BOUNDARIES;
+        tokenNAME = "PROGRAM" >> STRICT_BOUNDARIES;
+        tokenDATA = "VAR" >> STRICT_BOUNDARIES;
         tokenBEGIN = "BEGIN" >> STRICT_BOUNDARIES;
-        tokenEND = "ENDBLOCK" >> STRICT_BOUNDARIES;
-        tokenBEGINBLOCK = "{" >> BOUNDARIES; // or STRICT_BOUNDARIES for keyword;
-        tokenENDBLOCK = "}" >> BOUNDARIES;   // or STRICT_BOUNDARIES for keyword;
-        tokenLEFTSQUAREBRACKETS = "[" >> BOUNDARIES; // or STRICT_BOUNDARIES for keyword;
-        tokenRIGHTSQUAREBRACKETS = "]" >> BOUNDARIES; // or STRICT_BOUNDARIES for keyword;
+        tokenEND = "END" >> STRICT_BOUNDARIES;
+        tokenBEGINBLOCK = "{" >> BOUNDARIES;
+        tokenENDBLOCK = "}" >> BOUNDARIES;
+        tokenLEFTSQUAREBRACKETS = "[" >> BOUNDARIES;
+        tokenRIGHTSQUAREBRACKETS = "]" >> BOUNDARIES;
         tokenSEMICOLON = ";" >> BOUNDARIES;
-        // 
-        //
         STRICT_BOUNDARIES = (BOUNDARY >> *(BOUNDARY)) | (!(qi::alpha | qi::char_("_")));
         BOUNDARIES = (BOUNDARY >> *(BOUNDARY) | NO_BOUNDARY);
         BOUNDARY = BOUNDARY_SPACE | BOUNDARY_TAB | BOUNDARY_CARRIAGE_RETURN | BOUNDARY_LINE_FEED | BOUNDARY_NULL;
@@ -580,7 +580,6 @@ binary_action____iteration_after_two
         BOUNDARY_LINE_FEED = "\n";
         BOUNDARY_NULL = "\0";
         NO_BOUNDARY = "";
-        //
         A = "A";
         B = "B";
         C = "C";
@@ -607,7 +606,6 @@ binary_action____iteration_after_two
         X = "X";
         Y = "Y";
         Z = "Z";
-        //
         a = "a";
         b = "b";
         c = "c";
@@ -680,10 +678,11 @@ binary_action____iteration_after_two
         input,
         output,
         statement,
+        tokenUNDERSCORE,
         block_statements,
         program,
         //
-        tokenCOLON, tokenGOTO, tokenINTEGER, tokenCOMMA, tokenNOT, tokenAND, tokenOR, tokenEQUAL, tokenNOTEQUAL, tokenLESSOREQUAL,
+        tokenLESS, tokenGREATER, tokenCOLON, tokenGOTO, tokenINTEGER, tokenCOMMA, tokenNOT, tokenAND, tokenOR, tokenEQUAL, tokenNOTEQUAL, tokenLESSOREQUAL,
         tokenGREATEROREQUAL, tokenPLUS, tokenMINUS, tokenMUL, tokenDIV, tokenMOD, tokenGROUPEXPRESSIONBEGIN, tokenGROUPEXPRESSIONEND, tokenRLBIND, tokenLRBIND,
         tokenELSE, tokenIF, tokenDO, tokenFOR, tokenTO, tokenDOWNTO, tokenWHILE, tokenCONTINUE, tokenEXIT, tokenREPEAT, tokenUNTIL, tokenGET, tokenPUT, tokenNAME, tokenBODY, tokenDATA, tokenBEGIN, tokenEND, tokenBEGINBLOCK, tokenENDBLOCK, tokenLEFTSQUAREBRACKETS, tokenRIGHTSQUAREBRACKETS, tokenSEMICOLON,
         //
